@@ -8,8 +8,11 @@
     <meta name="description" content="This is the online markdown editor with live preview.">
 
     <link rel="stylesheet" type="text/css" href="css/style.css">
+-<!--
+    <link rel="stylesheet" type="text/css" href="css/github-markdown-light.css">
+-->
+    <link rel="stylesheet" type="text/css" href="css/gs-github-markdown.css">
 
-    <link rel="stylesheet" type="text/css" href="css/github-markdown.css">
     <link rel="icon" type="image/png" href="favicon.png">
 
     <script type="text/javascript" src="js/marked.min.js"></script>
@@ -55,6 +58,12 @@
 	    <button id="savefile">Seve File</button>
 	     &ensp; 
 	    <button id="saveAsfile">Seve As File</button>
+	     &ensp; 
+	     &ensp; 
+	     &ensp; 
+	    <button id="schemeToggle">Dark</button>
+	     &ensp; 
+	    <button id="keybindChange">none</button>
         </div>
         <div id="github"><a href="https://github.com/tanabe/markdown-live-preview"><img src="image/GitHub-Mark-Light-32px.webp"></a></div>
     </header>
@@ -70,8 +79,8 @@
 	<div role="separator" tabindex="1"></div>
 
         <div id="preview" class="column" style="width: 50%;">
-            <div id="preview-wrapper">
-                <div id="output" class="content markdown-body"></div>
+            <div id="preview-wrapper" class="dark">
+                <div id="output" class="content markdown-body dark"></div>
             </div>
         </div>
     </div>

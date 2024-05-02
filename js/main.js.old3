@@ -5,8 +5,6 @@ document.addEventListener("DOMContentLoaded", () => {
  var saveAs_button = document.querySelector('#saveAsfile');
  var save_button = document.querySelector('#savefile');
  var filename_label = document.querySelector('#filename');
- var schemeToggl_button = document.querySelector('#schemeToggle');
- var keybindChange_button = document.querySelector('#keybindChange');
 
  var filepath = null;
  var fileHandle = null
@@ -23,53 +21,6 @@ saveAs_button.addEventListener("click", function(ev){
       saveAsFile();
 }, false);
 
-schemeToggl_button.addEventListener("click", function(ev){
-      schemeChange();
-}, false);
-
-keybindChange_button.addEventListener("click", function(ev){
-      keybindChange();
-}, false);
-
-function keybindChange(e) {
-	if (keybindChange_button.textContent == "none") {
-             keybindChange_button.textContent = "vim";
-	     editor.setKeyboardHandler("ace/keyboard/vim");  
-	} else if (keybindChange_button.textContent == "vim") {
-             keybindChange_button.textContent = "none";
-	     editor.setKeyboardHandler("");  
-	}
-}
-function schemeChange(e) {
-
-	console.log(schemeToggl_button.textContent);  
-	if (schemeToggl_button.textContent == "Dark") {
-     	  schemeToggl_button.textContent = "Light";
-          var output = document.querySelector('#output');
-          output.classList.remove("dark");
-          output.classList.add("light");
-
-          var preview = document.querySelector('#preview-wrapper');
-          preview.classList.remove("dark");
-          preview.classList.add("light");
-         editor.setTheme('ace/theme/chrome');
-
-	} else if (schemeToggl_button.textContent == "Light") {
-     	  schemeToggl_button.textContent = "Dark";
-          var output = document.querySelector('#output');
-          output.classList.remove("light");
-          output.classList.add("dark");
-
-          var preview = document.querySelector('#preview-wrapper');
-          preview.classList.remove("light");
-          preview.classList.add("dark");
-         editor.setTheme('ace/theme/one_dark');
-	}
-
-}
-
-//    editor.setFontSize(14);
-//
 const pickerOpts = {
   types: [
     {
@@ -245,7 +196,6 @@ This web site is using ${"`"}markedjs/marked${"`"}.
 
         var MarkdownMode = ace.require("ace/mode/markdown").Mode;
         editor.session.setMode(new MarkdownMode());
-        //editor.setKeyboardHandler("ace/keyboard/vim");
 
         editor.on('change', () => {
             let changed = editor.getValue() != defaultInput;
