@@ -2,12 +2,8 @@
 document.addEventListener("DOMContentLoaded", () => {
 
  var open_button = document.querySelector('#openfile');
- var saveAs_button = document.querySelector('#saveAsfile');
  var save_button = document.querySelector('#savefile');
- var filename_label = document.querySelector('#filename');
-
  var filepath = null;
- var fileHandle = null
 
 open_button.addEventListener("click", function(ev){
       getFile();
@@ -15,10 +11,6 @@ open_button.addEventListener("click", function(ev){
 
 save_button.addEventListener("click", function(ev){
       saveFile();
-}, false);
-
-saveAs_button.addEventListener("click", function(ev){
-      saveAsFile();
 }, false);
 
 const pickerOpts = {
@@ -36,14 +28,11 @@ const pickerOpts = {
 
 
 async function getFile() {
-  //const [fileHandle] = await window.showOpenFilePicker(pickerOpts);
-  [fileHandle] = await window.showOpenFilePicker(pickerOpts);
+  // ファイルピッカーを開き、結果を分解して最初のハンドルを取り出す
+  const [fileHandle] = await window.showOpenFilePicker(pickerOpts);
 
+  // ファイルの内容を得る
    filepath = await fileHandle.getFile();
-
-   console.log(filepath.name);
-   filename_label.innerText = " [ " + filepath.name + " ] ";
-
     var reader = new FileReader();
     console.dir(filepath);
     reader.readAsText(filepath); 
@@ -69,37 +58,58 @@ const saveFileOptions = {
   ],
 };
 
-async function saveAsFile() {
-
-    let value = editor.getValue();
-  const newHandle = await window.showSaveFilePicker(saveFileOptions);
-
-  const writableStream = await newHandle.createWritable();
-
-  await writableStream.write(value);
-
-  await writableStream.close();
-
-}
-
 async function saveFile() {
 
-  if (filepath == null) {
-       alert("filepath null!!!");
-	  return;
-
-  }
     let value = editor.getValue();
-  //const newHandle = await window.showSaveFilePicker(saveFileOptions);
+ // 新しいハンドルを作成する
+  const newHandle = await window.showSaveFilePicker(saveFileOptions);
 
-  const writableStream = await fileHandle.createWritable();
+  // 書き込み先の FileSystemWritableFileStream を作成する
+  const writableStream = await newHandle.createWritable();
 
+  // ファイルに書き込む
   await writableStream.write(value);
 
+  // ファイルを閉じ、データをディスクに書き込む
   await writableStream.close();
 
 }
 
+/*
+open_button.addEventListener("change", function(ev){
+    var file = ev.target.files;    
+    var reader = new FileReader();
+    console.log(file[0]);
+    filepath = file[0];
+    console.dir(filepath);
+    console.log(filepath.name);
+    console.log(filepath.webkitRelativePath);
+    reader.readAsText(file[0]); 
+
+    reader.onload = function(e){
+        let input = reader.result;
+        presetValue(input);
+        document.querySelectorAll('.column').forEach((element) => {
+            element.scrollTo({top: 0});
+        });
+    }
+}, false);
+*/
+	/*
+save_button.addEventListener("click", function(ev){
+
+    var reader = new FileReader();
+    
+    reader.readAsText(filepath); 
+    reader.onload = function(e){
+        let input = reader.result;
+        console.log(input);
+    }
+
+}, false);
+*/
+
+//document.addEventListener("DOMContentLoaded", () => {
     let hasEdited = false;
     let scrollBarSync = false;
 

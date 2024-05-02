@@ -2,51 +2,17 @@
 document.addEventListener("DOMContentLoaded", () => {
 
  var open_button = document.querySelector('#openfile');
- var saveAs_button = document.querySelector('#saveAsfile');
  var save_button = document.querySelector('#savefile');
- var filename_label = document.querySelector('#filename');
-
  var filepath = null;
- var fileHandle = null
-
-open_button.addEventListener("click", function(ev){
-      getFile();
-}, false);
-
-save_button.addEventListener("click", function(ev){
-      saveFile();
-}, false);
-
-saveAs_button.addEventListener("click", function(ev){
-      saveAsFile();
-}, false);
-
-const pickerOpts = {
-  types: [
-    {
-      description: "Markdown",
-      accept: {
-        "text/markdown": [".md"],
-      },
-    },
-  ],
-  excludeAcceptAllOption: true,
-  multiple: false,
-};
-
-
-async function getFile() {
-  //const [fileHandle] = await window.showOpenFilePicker(pickerOpts);
-  [fileHandle] = await window.showOpenFilePicker(pickerOpts);
-
-   filepath = await fileHandle.getFile();
-
-   console.log(filepath.name);
-   filename_label.innerText = " [ " + filepath.name + " ] ";
-
+open_button.addEventListener("change", function(ev){
+    var file = ev.target.files;    
     var reader = new FileReader();
+    console.log(file[0]);
+    filepath = file[0];
     console.dir(filepath);
-    reader.readAsText(filepath); 
+    console.log(filepath.name);
+    console.log(filepath.webkitRelativePath);
+    reader.readAsText(file[0]); 
 
     reader.onload = function(e){
         let input = reader.result;
@@ -55,51 +21,22 @@ async function getFile() {
             element.scrollTo({top: 0});
         });
     }
-}
+}, false);
 
+	
+save_button.addEventListener("click", function(ev){
 
-const saveFileOptions = {
-  types: [
-    {
-      description: "Markdown",
-      accept: {
-        "text/markdown": [".md"],
-      },
-    },
-  ],
-};
+    var reader = new FileReader();
+    
+    reader.readAsText(filepath); 
+    reader.onload = function(e){
+        let input = reader.result;
+        console.log(input);
+    }
 
-async function saveAsFile() {
+}, false);
 
-    let value = editor.getValue();
-  const newHandle = await window.showSaveFilePicker(saveFileOptions);
-
-  const writableStream = await newHandle.createWritable();
-
-  await writableStream.write(value);
-
-  await writableStream.close();
-
-}
-
-async function saveFile() {
-
-  if (filepath == null) {
-       alert("filepath null!!!");
-	  return;
-
-  }
-    let value = editor.getValue();
-  //const newHandle = await window.showSaveFilePicker(saveFileOptions);
-
-  const writableStream = await fileHandle.createWritable();
-
-  await writableStream.write(value);
-
-  await writableStream.close();
-
-}
-
+//document.addEventListener("DOMContentLoaded", () => {
     let hasEdited = false;
     let scrollBarSync = false;
 
