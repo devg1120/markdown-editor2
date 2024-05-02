@@ -7,6 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
  var filename_label = document.querySelector('#filename');
  var schemeToggl_button = document.querySelector('#schemeToggle');
  var keybindChange_button = document.querySelector('#keybindChange');
+ var swap_button = document.querySelector('#swap');
 
  var filepath = null;
  var fileHandle = null
@@ -30,6 +31,40 @@ schemeToggl_button.addEventListener("click", function(ev){
 keybindChange_button.addEventListener("click", function(ev){
       keybindChange();
 }, false);
+
+swap_button.addEventListener("click", function(ev){
+      swap();
+}, false);
+
+
+function swap() {
+        var a = document.querySelector("#edit");
+        var b = document.querySelector("#preview");
+	var p1 = a.parentNode,
+		p2 = b.parentNode,
+		i1,
+		i2;
+
+	if (!p1 || !p2 || p1.isEqualNode(b) || p2.isEqualNode(a)) return;
+
+	for (var i = 0; i < p1.children.length; i++) {
+		if (p1.children[i].isEqualNode(a)) {
+			i1 = i;
+		}
+	}
+	for (var i = 0; i < p2.children.length; i++) {
+		if (p2.children[i].isEqualNode(b)) {
+			i2 = i;
+		}
+	}
+
+	if (p1.isEqualNode(p2) && i1 < i2) {
+		i2++;
+	}
+	p1.insertBefore(b, p1.children[i1]);
+	p2.insertBefore(a, p2.children[i2]);
+}
+
 
 function keybindChange(e) {
 	if (keybindChange_button.textContent == "none") {
