@@ -8,6 +8,7 @@
     <meta name="description" content="This is the online markdown editor with live preview.">
 
     <link rel="stylesheet" type="text/css" href="css/style.css">
+
     <link rel="stylesheet" type="text/css" href="css/github-markdown.css">
     <link rel="icon" type="image/png" href="favicon.png">
 
@@ -17,6 +18,9 @@
     <script type="text/javascript" src="js/ace/mode-markdown.js"></script>
     <script type="text/javascript" src="js/storehouse.js"></script>
     <script type="text/javascript" src="js/main.js"></script>
+
+    <script type="text/javascript" src="flex-splitter-directive/index.js"></script>
+    <link rel="stylesheet" type="text/css" href="flex-splitter-directive/styles.min.css">
 
     <title>Markdown Live Preview</title>
   </head>
@@ -55,14 +59,17 @@
         <div id="github"><a href="https://github.com/tanabe/markdown-live-preview"><img src="image/GitHub-Mark-Light-32px.webp"></a></div>
     </header>
 
-    <div id="container">
+    <div  data-flex-splitter-horizontal  id="container"  style="flex: auto;">
 
-        <div id="edit" class="column">
+        <div id="edit" class="column" style="flex: auto;">
             <div id="editor-wrapper">
                 <div id="editor"></div>
             </div>
         </div>
-        <div id="preview" class="column">
+
+	<div role="separator" tabindex="1"></div>
+
+        <div id="preview" class="column" style="width: 50%;">
             <div id="preview-wrapper">
                 <div id="output" class="content markdown-body"></div>
             </div>
