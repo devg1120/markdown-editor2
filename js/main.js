@@ -245,7 +245,9 @@ This web site is using ${"`"}markedjs/marked${"`"}.
 
         var MarkdownMode = ace.require("ace/mode/markdown").Mode;
         editor.session.setMode(new MarkdownMode());
+
         //editor.setKeyboardHandler("ace/keyboard/vim");
+        editor.setShowPrintMargin(false);
 
         editor.on('change', () => {
             let changed = editor.getValue() != defaultInput;
